@@ -12,5 +12,11 @@ function getUserInput(){
     return userInput;
 }
 
+function generateComputerInput(){
+    let options = ['r', 's', 'p'];
+    let index = Math.floor(Math.random() * 3);
+    return options[index];
+}
 
-getUserInput();
+
+console.log(generateComputerInput())
