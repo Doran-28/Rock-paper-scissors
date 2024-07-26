@@ -2,16 +2,32 @@
 let userScore = 0;
 let computerScore = 0;
 
+let rock = document.querySelector("#rock");
+let paper = document.querySelector("#paper");
+let scissors = document.querySelector("#scissors");
+let info = document.querySelectorAll(".info h3")
 
-function getUserInput(){
-    let userInput = String(prompt("Rock (R), Paper (P), or Scissors (S): "));
 
-    while (userInput.toLowerCase() != "r" && userInput.toLowerCase() != "p" && userInput.toLowerCase() != "s" ){
-        console.log("Incorrect value");
-        userInput = String(prompt("Rock (R), Paper (P), or Scissors (S): "));
-    }
-    return userInput;
+rock.addEventListener("click", () => {
+    playRound('r');
+    changeInfo()
+});
+
+paper.addEventListener("click", () => {
+    playRound('p');
+    changeInfo()
+});
+
+scissors.addEventListener("click", () => {
+    playRound('s');
+    changeInfo()
+});
+
+function changeInfo(){
+    info[2].textContent = `User score: ${userScore}` 
+    info[3].textContent = `Computer score: ${computerScore}`;
 }
+
 
 function generateComputerInput(){
     let options = ['r', 's', 'p'];
@@ -19,13 +35,14 @@ function generateComputerInput(){
     return options[index];
 }
 
-function playRound(){
-    let userPlay = getUserInput();
+function playRound(userMove){
+    let userPlay = userMove
     let computerPlay = generateComputerInput();
     let winner = ""
 
     if (userPlay == computerPlay){
-        console.log("There has been a tie, no points gained")
+        info[1].textContent = "There has been a tie, no points gained";
+        console.log("There has been a tie, no points gained");
     }
     else{
         if (userPlay == 'r' && computerPlay == 's') {userScore++; winner = 'u';}
@@ -34,10 +51,12 @@ function playRound(){
         if (userPlay == 'p' && computerPlay == 's') {computerScore++; winner = 'c';}
         if (userPlay == 's' && computerPlay == 'p') {userScore++; winner = 'u';}
         if (userPlay == 's' && computerPlay == 'r') {computerScore++; winner = 'c';}
+    
+        console.log("User: " + userPlay + "  Computer: " + computerPlay)
+        winner == 'u' ? info[1].textContent = "You win this round!" : info[1].textContent = "You lose this round";
     }
-    console.log("User: " + userPlay + "  Computer: " + computerPlay)
-    winner == 'u' ? console.log("You win this round!") : console.log("You lose this round");
 }
+
 
 function game(){
     while (userScore < 3 && computerScore < 3){
@@ -51,4 +70,3 @@ function game(){
         console.log("You lose");
     }
 }
-game();
